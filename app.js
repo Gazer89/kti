@@ -1,19 +1,28 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+// const bodyParser = require("body-parser");
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require("mongoose");
+const PORT = process.env.PORT || 3001;
+const app = express();
+const routes = require("./routes");
+// const passport = require("./passport");
 
-var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+module.exports = app;
+// Add routes
+app.use(routes);
+
 app.use(express.static(path.join(__dirname, 'public')));
-
-
 app.get('*', (req, res) => {
+  console.log('WE SHOULD NOT SEE THIS.');
   res.sendFile(path.join(__dirname + 'public/index.html'));
 });
 
@@ -21,6 +30,7 @@ app.get('*', (req, res) => {
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -32,10 +42,12 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
 });
 
-var port = process.env.PORT || '3000';
+// app.use(passport.initialize())
+// app.use(passport.session()) 
 
-app.listen(port, () => {
-  console.log('Server started on port: ' + port);
+// Connect to the Mongo DB
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/kti");
+
+app.listen(PORT, function() {
+  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
-
-module.exports = app;

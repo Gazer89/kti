@@ -6,14 +6,20 @@
     "heroku-prebuild": "rm -rf public/ && mkdir public",
     "heroku-postbuild": "cd client && npm i && npm run build",
     "start": "node app.js",
-    "dev": "concurrently \"node app.js\" \"cd client && yarn start\""
+    "dev": "concurrently \"nodemon app.js\" \"cd client && yarn start\""
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "concurrently": "^3.6.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
+    "mongoose": "^5.2.1",
     "morgan": "~1.9.0",
-    "pug": "2.0.0-beta11"
+    "muicss": "^0.9.39",
+    "pug": "2.0.0-beta11",
+    "react-modal": "^3.5.1",
+    "react-responsive-modal": "^3.1.0"
   }
 }

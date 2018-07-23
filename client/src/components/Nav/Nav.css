@@ -1,0 +1,12 @@
+.navbar-brand {
+  font-size: 30px;
+  margin-left: 3%;
+}
+
+.ml-auto{
+  margin-right: 10%;
+}
+
+.navbar{
+  background-color: green;
+}

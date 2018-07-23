@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const path = require("path");
+const router = require("express").Router();
+const apiRoutes = require("./api");
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+
+  // API Routes
+  router.use("/api", apiRoutes);
+
+  // If no API routes are hit, send the React app
+  router.use(function(req, res) {
+    console.log('WE DON\'T WANT TO SEE THIS EITHER line 11 index.js');
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  });
 
 module.exports = router;
