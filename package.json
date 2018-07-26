@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "0.0.0",
+  "version": "8.9.1",
   "private": true,
   "scripts": {
     "heroku-prebuild": "rm -rf public/ && mkdir public",
