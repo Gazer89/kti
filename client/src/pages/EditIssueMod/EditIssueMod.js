@@ -8,7 +8,7 @@ import Input from 'muicss/lib/react/input';
 import Textarea from 'muicss/lib/react/textarea';
 import Button from 'muicss/lib/react/button';
 import EditBtn from "../../components/EditBtn";
-import CloseBtn from "../../components/CloseBtn";
+
 // import { Link } from "react-router-dom";
 // import { TextArea, FormBtn } from "../../components/Form";
 

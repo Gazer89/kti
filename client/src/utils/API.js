@@ -87,14 +87,13 @@ export default {
   dupIssue: function(id, issue) {
     return axios.put("/api/issues/" + id, issue);
   },
-  // getUser: function() {
-  //   return axios.get("api/users");
-  // },
-  // login: function(user) {
-  //   console.log("getting the login in api")
-  //   console.log(user);
-  //   return axios.post("api/users/login", user);
-  // },
+  logIn: function( auth) {
+    return axios.post("/api/users/login", auth);
+  },
+  addUser: function( payload) {
+    console.log("pay load at api js", payload)
+    return axios.post("/api/adduser", payload);
+  },
   // Saves a example to the database
   saveExample: function(exampleData) {
   return axios.post("/api/examples", exampleData);

@@ -87,7 +87,7 @@ class NewIssueMod extends React.Component {
 
 
   handleFormSubmit = event => {
-    console.log(event)
+
     event.preventDefault();
       API.saveIssue({
        
@@ -118,7 +118,7 @@ class NewIssueMod extends React.Component {
           onAfterOpen={this.afterOpenModal}
           // onRequestClose={this.closeModal}
           style={customStyles}>
-          <Button onClick={this.closeModal}>Close</Button>
+          <Button  className="mui--pull-right" onClick={this.closeModal}>Close</Button>
           <legend>New Issue</legend>
           <p> Complete all the fields that apply to the issue. </p>
           <Form>

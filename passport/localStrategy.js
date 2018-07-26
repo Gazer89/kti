@@ -1,24 +1,26 @@
-// const User = require('../models/users')
-// const LocalStrategy = require('passport-local').Strategy
+const User = require('../models/users')
+const LocalStrategy = require('passport-local').Strategy
 
-// const LocalStrategy = new LocalStrategy(
-// 	{
-// 		usernameField: 'username', 
-// 		passwordField: 'password'
-// 	},
-// 	function (username, password, done) {
-// 		User.findOne({ username: username }, function(err, user) {
-// 			if (err) throw err;
-// 			user.comparePassword(password, function(err, isMatch) {
-// 				if (err) throw err;
-// 				return done(null, user)
-// 			});
-	
-// 		})
+const strategy = new LocalStrategy(
+	{
+		usernameField: 'username' // not necessary, DEFAULT
+	},
+	function(username, password, done) {
+		console.log("passport.authenticate")
+		User.findOne({ username: username }, (err, user) => {
+			if (err) {
+				console.log(err)
+				return done(err)
+			}
+			if (!user) {
+				return done(null, false, { message: 'Incorrect username' })
+			}
+			if (!user.compareUnhashedPasswords(password)) {
+				return done(null, false, { message: 'Incorrect password' })
+			}
+			return done(null, user)
+		})
+	}
+)
 
-// 	}
-	
-
-// );
-
-// module.exports = LocalStrategy;
+module.exports = strategy

@@ -4,7 +4,6 @@ mongoose.Promise = Promise;
 
 module.exports = {
   findAll: function(req, res) {
-    console.log('FIND ALL CONTROLLER!!!!!!!');
     db.Issue
       .find(req.query)
       .sort({ date: -1 })

@@ -7,6 +7,7 @@ import API from "../../utils/API";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import EditIssueMod from "../../pages/EditIssueMod"
+import AddUser from "../../components/AddUser";
 
 
 class Admin extends Component {
@@ -152,7 +153,12 @@ class Admin extends Component {
         
           <Col size="md-10 sm-12">
             <Row>
-              <h1>Admin Page</h1>
+                <Col size="md-10 sm-12">
+                <h1>Admin Page</h1>
+                </Col>
+              <Col size="md-2 sm-12">
+                <AddUser/>
+              </Col>
             </Row>
           <h3> Open Issues </h3>
             {this.state.openIssues.length ? (

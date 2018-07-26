@@ -1,73 +1,87 @@
+// const router = require("express").Router();
+// 
+
+// // Matches with "/api/issues"
+// router.route("/admin")
+//   .get(usersController.findAll)
+//   .post(usersController.create);
+
+// // Matches with "/api/issues/:id"
+// router
+//   .route("/:id" )
+//   .get(usersController.findById)
+//   .put(usersController.update)
+//   .delete(usersController.remove);
+
+// module.exports = router;
+
 const express = require('express')
 const router = express.Router()
-const User = require("../../models/users")
-const passport = require("../../passport");
+const User = require('../../models/users')
+const passport = require('../../passport')
+const usersController = require("../../controllers/usersController");
 
 
-router.post('/login', (req, res) => {
-    console.log('req', req);
-
-    const { username, password } = req.body
-    
-    User.findOne({ username: username }, (err, user) => {
-        if (err) {
-            console.log('User.js post error: ', err)
-            return res.json(err);
-        } else if (user) {
-            res.json({
-                error: `Sorry, already a user with the username: ${username}`
-            })
-        }
-        else {
-            const newUser = new User({
-                username: username,
-                password: password
-            })
-            newUser.save((err, savedUser) => {
-                if (err) return res.json(err)
-                res.json(savedUser)
-            })
-        }
-    })
+// this route is just used to get the user basic info
+router.get('/users', (req, res, next) => {
+	console.log('===== user!!======')
+	console.log(req.user)
+	if (req.user) {
+		return res.json({ user: req.user })
+	} else {
+		return res.json({ user: null })
+	}
 })
 
-router.post('/login', (req, res) => {
-    console.log('REQ.BODY: ', req.body);
+router.post(
+	'/login',
+	function(req, res, next) {
+		console.log(req.body)
+		console.log('================')
+		next()
+	},
+	passport.authenticate('local'),
+	(req, res) => {
+		console.log('POST to /login')
+		const user = JSON.parse(JSON.stringify(req.user)) // hack
+		const cleanUser = Object.assign({}, user)
+		if (cleanUser.local) {
+			console.log(`Deleting ${cleanUser.local.password}`)
+			delete cleanUser.local.password
+		}
+		res.json({ user: cleanUser })
+	}
+)
 
-    passport.authenticate('local', (err, user, info) => {
-        if (err) {
-            console.log(err);
-            return res.status(403).json({ notLoggedIn: err })
-        }
-        if (!user) {
-            console.log(info);
-            return res.status(403).json({ notLoggedIn: info })
-        }
-        console.log('logged in', user);
 
-        req.session.save();
-        res.json(user);
-    })(req, res);
-})
-    
+// router.post('/logout', (req, res) => {
+// 	if (req.user) {
+// 		req.session.destroy()
+// 		res.clearCookie('connect.sid') // clean up!
+// 		return res.json({ msg: 'logging you out' })
+// 	} else {
+// 		return res.json({ msg: 'no user to log out!' })
+// 	}
+// })
 
-router.get('/', (req, res, next) => {
-
-    console.log("user", req.user)
-    if (req.user) {
-        res.json({ user: req.user })
-    } else {
-        res.json({ user: null })
-    }
-})
-
-router.post('/logout', (req, res) => {
-    if (req.user) {
-        req.logout()
-        res.send({ msg: 'logging out' })
-    } else {
-        res.send({ msg: 'no user to log out' })
-    }
-})
+// router.post('/signup', (req, res) => {
+// 	const { username, password } = req.body
+// 	// ADD VALIDATION
+// 	User.findOne({ 'local.username': username }, (err, userMatch) => {
+// 		if (userMatch) {
+// 			return res.json({
+// 				error: `Sorry, already a user with the username: ${username}`
+// 			})
+// 		}
+// 		const newUser = new User({
+// 			'local.username': username,
+// 			'local.password': password
+// 		})
+// 		newUser.save((err, savedUser) => {
+// 			if (err) return res.json(err)
+// 			return res.json(savedUser)
+// 		})
+// 	})
+// })
 
 module.exports = router

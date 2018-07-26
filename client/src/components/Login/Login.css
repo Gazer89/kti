@@ -1,6 +1,4 @@
-/* .EditBtn-btn {
-  float: right;
-  color: white;
-  margin-left: 10px;
-  background-color: gray;
-} */
+Panel {
+  height: 200px;
+  widows: 200px;
+}
