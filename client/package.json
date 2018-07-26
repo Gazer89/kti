@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "0.1.0",
+  "version": "8.9.1",
   "proxy": {
     "/api": {
       "target": "http://localhost:3001",
