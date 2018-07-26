@@ -9,6 +9,7 @@
     "dev": "concurrently \"nodemon app.js\" \"cd client && yarn start\""
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bcrypt-nodejs": "0.0.3",
     "concurrently": "^3.6.0",
     "connect-mongo": "^2.0.1",
